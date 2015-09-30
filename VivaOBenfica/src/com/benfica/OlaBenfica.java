@@ -7,6 +7,7 @@ public class OlaBenfica {
 		System.out.print("Viva o Benfica");
 		System.out.print("Viva o Benfica");
 		System.out.print("Viva o Benfica");
+		System.out.print("Viva o Benfica");
 	}
 
 }
