@@ -59,7 +59,7 @@ public class HangManServlet extends HttpServlet {
         }
 
         String resposeContent = "";
-        if ("".equals(idParameter)) {            // is a new game
+        if ("".equals(idParameter)) {            // it is a new game
             resposeContent = service.processRequest(idParameter);
         } else if (!"".equals(keyParameter) && !"".equals(stateParameter)
                 && !"".equals(hintParameter) && !"".equals(newLetterParameter) && !"".equals(triedLettersParameter)) {
