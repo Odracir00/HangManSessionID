@@ -33,7 +33,7 @@ public class HangManServiceTest {
         //game.processNewLetter(c);
         //updateGamesSummary();
         //createResponse();
-        //There is no need for example to test “game.processNewLetter” 
+        //There is no need for example to test â€œgame.processNewLetterâ€� 
         //because this has already been done in GameTest.
         service.processRequest(ID, KEY, State.RIGHT_ARM, HINT, BAD_NEW_LETTER, TRIED_LETTERS);
     }
@@ -44,7 +44,7 @@ public class HangManServiceTest {
         
         Game game = service.getGame();
         assertEquals(ID, game.getId());
-        assertEquals(KEY, game.getKey());   // rrepetiçao, usar antes o mockito
+        assertEquals(KEY, game.getKey());   // rrepetiÃ§ao, usar antes o mockito
         assertEquals(State.RIGHT_ARM, game.getState());
         assertEquals(HINT, game.getHint());
     }
