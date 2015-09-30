@@ -1,8 +1,9 @@
 package com.hangman.elements;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.After;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class StateTest {
 

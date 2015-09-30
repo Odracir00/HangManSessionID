@@ -54,10 +54,11 @@ public class GamesSummaryTest {
     @Test
     public void testDeleteGameById() {
         Map<String, String> summariesMap = uniqueInstance.getCurrentGames();
+         
         addSummaries(summariesMap);
-
+ 
         uniqueInstance.deleteGameById(ID1);
-
+        
         assertEquals(1, summariesMap.size());
         assertEquals(null, summariesMap.get(ID1));
         assertEquals(SUMMARY_B, summariesMap.get(ID2));

@@ -3,8 +3,10 @@ package com.hangman.service;
 import com.hangman.elements.State;
 import com.hangman.elements.Country;
 import com.hangman.elements.Game;
-import jdk.nashorn.internal.ir.annotations.Ignore;
+import com.hangman.elements.GamesSummary;
+
 import org.junit.Test;
+import org.junit.Ignore;
 import static org.junit.Assert.*;
 
 public class HangManServiceTest {
@@ -17,13 +19,13 @@ public class HangManServiceTest {
     final private static String TRIED_LETTERS = "epal";
     final private static String NEW_LINE = ";&lt;/br&gt;";
     
-    HangManService service;
-    
-    public HangManServiceTest() {
-        service = new HangManService();
+	HangManService service;
+
+
+	public HangManServiceTest() {
+		 service = new HangManService();
     }
  
-    @Ignore
     @Test
     public void testProcessRequest() {
         //TODO:
@@ -36,8 +38,14 @@ public class HangManServiceTest {
         //There is no need for example to test "game.processNewLetter" 
         //because this has already been done in GameTest.
         service.processRequest(ID, KEY, State.RIGHT_ARM, HINT, BAD_NEW_LETTER, TRIED_LETTERS);
+ 
+        cleanUpSummaries();
     }
 
+	private static void cleanUpSummaries() {
+		GamesSummary.getInstance().deleteAllGames();
+	}
+	
     @Test
     public void testGenerateGame_NotNewGame() {
         service.generateGame(ID, KEY, State.RIGHT_ARM, HINT, BAD_NEW_LETTER, TRIED_LETTERS);
@@ -70,6 +78,7 @@ public class HangManServiceTest {
         // and verify the correct method's calls
     }
 
+    
     @Test
     public void testCreateResponse() {
         
@@ -85,6 +94,7 @@ public class HangManServiceTest {
                 + "</data>";
         assertEquals(expecteGameResponse, gameResponse);
     }
+
 
     @Test
     public void testCreateGameSummary() {

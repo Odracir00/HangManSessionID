@@ -36,6 +36,10 @@ public class GamesSummary {
         currentGames.remove(id);        // Game over or success
     }
 
+    public synchronized void deleteAllGames() {
+        currentGames.clear();        // Game over or success
+    }
+    
     public synchronized void addorUpdateGameById(String id, String gameSummary) {
         currentGames.put(id, gameSummary); // new game or new interactio
     }
