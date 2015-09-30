@@ -6,6 +6,7 @@ public class OlaBenfica {
 		// TODO Auto-generated method stub
 		System.out.print("Viva o Benfica");
 		System.out.print("Viva o Benfica");
+		System.out.print("Viva o Benfica");
 	}
 
 }
