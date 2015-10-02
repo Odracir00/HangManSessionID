@@ -27,14 +27,14 @@ public class HangManService {
         this.game = game;
     }
 
-    public String processRequest(String id) {
-        return processRequest(id, null, null, null, '\0', null);
+    public String processRequest() {
+        return processRequest(null, null, null, '\0', "");
     }
-
-    public String processRequest(String id, Integer key, State state, 
+    
+    public String processRequest(Integer key, State state, 
             String hint, char c, String triedLetters) {
-        generateGame(id, key, state, hint, c, triedLetters);
-        if (!"".equals(id) && c != '\0') {
+        generateGame("", key, state, hint, c, triedLetters); // first arg to be removed
+        if (key != null && c != '\0') {
             game.processNewLetter(c);
         }
         updateGamesSummary();
@@ -43,10 +43,11 @@ public class HangManService {
         return response;
     }
 
+
     void generateGame(String id, Integer key, State state,
             String hint, char c, String triedLetters) {
 
-        if ("".equals(id)) {    // It is a new game
+        if (key == null) {    // It is a new game
             String newId = UUID.randomUUID().toString();
             Integer newKey = AnswersData.getRandomAnswerId();
             Answer answer = AnswersData.getAnswerFromId(newKey);
@@ -73,6 +74,7 @@ public class HangManService {
                 + "<key>" + game.getKey() + "</key>"
                 + "<state>" + game.getState() + "</state>"
                 + "<hint>" + game.getHint() + "</hint>"
+                + "<letters>" + game.getTriedLetters() + "</letters>"
                 + "</data>";
         return newGameResponseData;
     }

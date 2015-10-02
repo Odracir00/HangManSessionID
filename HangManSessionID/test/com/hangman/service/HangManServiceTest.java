@@ -37,7 +37,8 @@ public class HangManServiceTest {
         //createResponse();
         //There is no need for example to test "game.processNewLetter" 
         //because this has already been done in GameTest.
-        service.processRequest(ID, KEY, State.RIGHT_ARM, HINT, BAD_NEW_LETTER, TRIED_LETTERS);
+        service.processRequest(KEY, State.RIGHT_ARM, HINT, BAD_NEW_LETTER, TRIED_LETTERS);
+        //service.processRequest(ID, KEY, State.RIGHT_ARM, HINT, BAD_NEW_LETTER, TRIED_LETTERS);
  
         cleanUpSummaries();
     }
@@ -91,6 +92,7 @@ public class HangManServiceTest {
                 + "<key>" + KEY + "</key>"
                 + "<state>" + State.FLOOR + "</state>"
                 + "<hint>" + HINT + "</hint>"
+                + "<letters>" + TRIED_LETTERS + "</letters>"
                 + "</data>";
         assertEquals(expecteGameResponse, gameResponse);
     }

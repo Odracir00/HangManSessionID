@@ -26,7 +26,7 @@ public class Game {
     /**
      * Letters that the user already have tried.
      */
-    final private String triedLetters;
+    private String triedLetters;
 
     public Game(String id, Integer key, Answer answer) { // it is a new game 
         this.id = id;
@@ -58,6 +58,9 @@ public class Game {
     }
 
     public void processNewLetter(char c) {
+    	
+    	triedLetters += String.valueOf(c);
+    	
         boolean hit = false;
         boolean success = false;
         char[] answerArray = answer.getName().toCharArray();

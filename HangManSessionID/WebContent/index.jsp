@@ -12,7 +12,8 @@
 
         <table>
             <tr>
-                <th width="200"><img src="/imgs/HangingMan.jpg" alt="Hanging Man" width="200">
+                <th width="200">
+<!--                 <img src="/HangManSessionID/imgs/HangingMan.jpg" alt="Hanging Man" width="200"> -->
                 </th>
                 <th width="200"><textarea id="hangmantext" name="hangmanstate" action="showstate" rows="10" cols="20">
                     </textarea></th>
