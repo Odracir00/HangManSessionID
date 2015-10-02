@@ -5,7 +5,6 @@ import com.hangman.elements.Answer;
 import com.hangman.elements.Game;
 import com.hangman.elements.GamesSummary;
 import com.hangman.elements.State;
-import java.util.UUID;
 
 /**
  * This class is responsible for processing the business logic associated to the
@@ -27,44 +26,41 @@ public class HangManService {
         this.game = game;
     }
 
-    public String processRequest() {
-        return processRequest(null, null, null, '\0', "");
+    public String processRequest(String sessionId) {
+        return processRequest( sessionId, null, null, null, '\0', "");
     }
     
-    public String processRequest(Integer key, State state, 
+    public String processRequest(String sessionId, Integer key, State state, 
             String hint, char c, String triedLetters) {
-        generateGame("", key, state, hint, c, triedLetters); // first arg to be removed
+        generateGame(key, state, hint, c, triedLetters); // first arg to be removed
         if (key != null && c != '\0') {
             game.processNewLetter(c);
         }
-        updateGamesSummary();
+        updateGamesSummary(sessionId);
 
         String response = createResponse();
         return response;
     }
 
-
-    void generateGame(String id, Integer key, State state,
-            String hint, char c, String triedLetters) {
+    void generateGame(Integer key, State state, String hint, char c, String triedLetters) {
 
         if (key == null) {    // It is a new game
-            String newId = UUID.randomUUID().toString();
             Integer newKey = AnswersData.getRandomAnswerId();
             Answer answer = AnswersData.getAnswerFromId(newKey);
-            game = new Game(newId, newKey, answer);
+            game = new Game(newKey, answer);
         } else {
             Answer answer = AnswersData.getAnswerFromId(key);
-            game = new Game(id, key, answer, state, hint, triedLetters);
+            game = new Game(key, answer, state, hint, triedLetters);
         }
     }
 
-    void updateGamesSummary() {
+    void updateGamesSummary(String sessionId) {
         State newGameState = game.getState();
         if (newGameState == State.RIGHT_LEG || newGameState == State.SUCCESS) {
-            gamesSummary.deleteGameById(game.getId());
+            gamesSummary.deleteGameById(sessionId);
         } else { // add or update
             String summary = createGameSummary(game);
-            gamesSummary.addorUpdateGameById(game.getId(), summary);
+            gamesSummary.addorUpdateGameById(sessionId, summary);
         }
     }
 
@@ -81,7 +77,7 @@ public class HangManService {
 
     String createGameSummary(Game game) {
 
-        String gameSummary = "Game ID:" + game.getId() + NEW_LINE
+        String gameSummary = "Game:" + NEW_LINE
                 + "State:" + game.getState() + NEW_LINE
                 + "Answer:" + game.getAnswer().getName() + NEW_LINE
                 + "Hint:" + game.getHint() + NEW_LINE

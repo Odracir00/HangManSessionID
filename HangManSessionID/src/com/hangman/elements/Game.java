@@ -6,7 +6,7 @@ public class Game {
      * Game id. Used to identify the game in the Map of games currently being
      * played.
      */
-    final private String id;
+    private String id = "";
     /**
      * Game key. Used to identify the correct answer in the Map of answers.
      */
@@ -28,8 +28,7 @@ public class Game {
      */
     private String triedLetters;
 
-    public Game(String id, Integer key, Answer answer) { // it is a new game 
-        this.id = id;
+    public Game(Integer key, Answer answer) { // it is a new game 
         this.key = key;
         this.answer = answer;
 
@@ -38,8 +37,7 @@ public class Game {
         triedLetters = "";
     }
 
-    public Game(String id, Integer key, Answer answer, State state, String hint, String triedLetters) { // it is a new game (!)
-        this.id = id;
+    public Game(Integer key, Answer answer, State state, String hint, String triedLetters) { // it is a new game (!)
         this.key = key;
         this.answer = answer;
         this.state = state;

@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 
 public class HangManServiceTest {
     
-    final private static String ID = "de325d54-75b4-434b-adb2-eb6b9e547119";
+    final private static String SESSION_ID = "de325d54-75b4-434b-adb2-eb6b9e547119";
     final private static Integer KEY = 1;
     final private static String HINT = " _ _ _ _ _ ";
     final private static char BAD_NEW_LETTER = 'r';
@@ -37,7 +37,7 @@ public class HangManServiceTest {
         //createResponse();
         //There is no need for example to test "game.processNewLetter" 
         //because this has already been done in GameTest.
-        service.processRequest(KEY, State.RIGHT_ARM, HINT, BAD_NEW_LETTER, TRIED_LETTERS);
+        service.processRequest(SESSION_ID, KEY, State.RIGHT_ARM, HINT, BAD_NEW_LETTER, TRIED_LETTERS);
         //service.processRequest(ID, KEY, State.RIGHT_ARM, HINT, BAD_NEW_LETTER, TRIED_LETTERS);
  
         cleanUpSummaries();
@@ -49,10 +49,9 @@ public class HangManServiceTest {
 	
     @Test
     public void testGenerateGame_NotNewGame() {
-        service.generateGame(ID, KEY, State.RIGHT_ARM, HINT, BAD_NEW_LETTER, TRIED_LETTERS);
+        service.generateGame(KEY, State.RIGHT_ARM, HINT, BAD_NEW_LETTER, TRIED_LETTERS);
         
         Game game = service.getGame();
-        assertEquals(ID, game.getId());
         assertEquals(KEY, game.getKey());
         assertEquals(State.RIGHT_ARM, game.getState());
         assertEquals(HINT, game.getHint());
@@ -60,10 +59,9 @@ public class HangManServiceTest {
  
     @Test
     public void testGenerateGame_NewGame() {
-        service.generateGame("", null, null, null, '\0', null);
+        service.generateGame(null, null, null, '\0', null);
         
         Game game = service.getGame();
-        assertNotNull(game.getId());
         assertNotNull(game.getKey());
         assertNotNull(game.getAnswer().getName());
         assertEquals(State.START, game.getState());
@@ -83,12 +81,12 @@ public class HangManServiceTest {
     @Test
     public void testCreateResponse() {
         
-        Game game = new Game(ID, KEY, new Country(ANSWER), State.FLOOR, HINT, TRIED_LETTERS);
+        Game game = new Game(KEY, new Country(ANSWER), State.FLOOR, HINT, TRIED_LETTERS);
 
         service = new HangManService(game);
         String gameResponse = service.createResponse();
         String expecteGameResponse = "<data>"
-                + "<id>" + ID + "</id>"
+                + "<id>" + "" + "</id>"
                 + "<key>" + KEY + "</key>"
                 + "<state>" + State.FLOOR + "</state>"
                 + "<hint>" + HINT + "</hint>"
@@ -101,11 +99,11 @@ public class HangManServiceTest {
     @Test
     public void testCreateGameSummary() {
 
-        Game game = new Game(ID, KEY, new Country(ANSWER), State.FLOOR, HINT, TRIED_LETTERS);
+        Game game = new Game(KEY, new Country(ANSWER), State.FLOOR, HINT, TRIED_LETTERS);
 
         service = new HangManService(game);
         String gameSummary = service.createGameSummary(game);
-        String expectedSummary = "Game ID:" + ID + NEW_LINE
+        String expectedSummary = "Game:" + NEW_LINE
                 + "State:" + State.FLOOR + NEW_LINE
                 + "Answer:" + ANSWER + NEW_LINE
                 + "Hint:" + HINT + NEW_LINE

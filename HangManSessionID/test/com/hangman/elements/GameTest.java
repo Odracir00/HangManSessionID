@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 
 public class GameTest {
 
-    final private static String ID = "de325d54-75b4-434b-adb2-eb6b9e547119";
     final private static Integer KEY = 1;
     final private static String HINT = " _ _ _ _ _ ";
     final private static String HINT4 = " n e p a l ";
@@ -16,8 +15,7 @@ public class GameTest {
 
     @Test
     public void testNewGame() {
-        Game game = new Game(ID, KEY, new Country(ANSWER));
-        assertNotNull(game.getId());
+        Game game = new Game(KEY, new Country(ANSWER));
         assertNotNull(game.getKey());
         assertNotNull(game.getAnswer().getName());
         assertEquals(State.START, game.getState());
@@ -27,8 +25,7 @@ public class GameTest {
 
     @Test
     public void testOnGoingGame() {
-        Game game = new Game(ID, KEY, new Country(ANSWER), State.ROPE, HINT, TRIED_LETTERS);
-        assertEquals(ID, game.getId());
+        Game game = new Game(KEY, new Country(ANSWER), State.ROPE, HINT, TRIED_LETTERS);
         assertEquals(KEY, game.getKey());
         assertEquals(State.ROPE, game.getState());
         assertNotNull(game.getAnswer().getName());
@@ -38,14 +35,14 @@ public class GameTest {
 
     @Test
     public void testCreateHint() {
-        Game game = new Game(ID, KEY, new Country(ANSWER));
+        Game game = new Game(KEY, new Country(ANSWER));
         game.createHint(ANSWER);
         assertEquals(HINT, game.getHint());
     }
 
     @Test
     public void testProcessNewLetter_HitAndSuccess() {
-        Game game = new Game(ID, KEY, new Country(ANSWER), State.ROPE, " n e _ a l ", TRIED_LETTERS);
+        Game game = new Game(KEY, new Country(ANSWER), State.ROPE, " n e _ a l ", TRIED_LETTERS);
         game.processNewLetter(GOOD_NEW_LETTER);
 
         assertEquals(KEY, game.getKey());
@@ -55,7 +52,7 @@ public class GameTest {
 
     @Test
     public void testProcessNewLetter_HitAndNotSuccess() {
-        Game game = new Game(ID, KEY, new Country(ANSWER), State.ROPE, " _ e _ a l ", TRIED_LETTERS);
+        Game game = new Game(KEY, new Country(ANSWER), State.ROPE, " _ e _ a l ", TRIED_LETTERS);
         game.processNewLetter(GOOD_NEW_LETTER);
 
         assertEquals(KEY, game.getKey());
@@ -65,7 +62,7 @@ public class GameTest {
 
     @Test
     public void testProcessNewLetter_MissAndGameOver() {
-        Game game = new Game(ID, KEY, new Country(ANSWER), State.LEFT_LEG, " _ e _ a l ", TRIED_LETTERS);
+        Game game = new Game(KEY, new Country(ANSWER), State.LEFT_LEG, " _ e _ a l ", TRIED_LETTERS);
         game.processNewLetter(BAD_NEW_LETTER);
 
         assertEquals(KEY, game.getKey());
@@ -75,7 +72,7 @@ public class GameTest {
 
     @Test
     public void testProcessNewLetter_MissAndNotGameOver() {
-        Game game = new Game(ID, KEY, new Country(ANSWER), State.RIGHT_ARM, " _ e _ a l ", TRIED_LETTERS);
+        Game game = new Game(KEY, new Country(ANSWER), State.RIGHT_ARM, " _ e _ a l ", TRIED_LETTERS);
         game.processNewLetter(BAD_NEW_LETTER);
 
         assertEquals(KEY, game.getKey());
@@ -85,14 +82,14 @@ public class GameTest {
 
     @Test
     public void testUpdateStateFromStartToFloor() {
-        Game game = new Game(ID, KEY, new Country(ANSWER), State.START, HINT, TRIED_LETTERS);
+        Game game = new Game(KEY, new Country(ANSWER), State.START, HINT, TRIED_LETTERS);
         game.updateState();
         assertEquals(State.FLOOR, game.getState());
     }
 
     @Test
     public void testUpdateStateFromFloorToVerticalbar() {
-        Game game = new Game(ID, KEY, new Country(ANSWER), State.FLOOR, HINT, TRIED_LETTERS);
+        Game game = new Game(KEY, new Country(ANSWER), State.FLOOR, HINT, TRIED_LETTERS);
         game.updateState();
         assertEquals(State.VERTICAL_BAR, game.getState());
     }
