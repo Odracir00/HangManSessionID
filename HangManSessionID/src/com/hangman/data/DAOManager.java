@@ -35,9 +35,9 @@ public class DAOManager {
 		DAOManager daoManager = new DAOManager();
 
 		/* Add few game records to the database */
-		Integer gameID1 = daoManager.addGame(new Game (21, new Country("France")));
-		Integer gameID2 = daoManager.addGame(new Game (22, new Country("Estonia")));
-		Integer gameID3 = daoManager.addGame(new Game (23, new Country("Slovakia")));
+		Integer gameID1 = daoManager.addGame(new Game (21, new Country("France"), "_ _ _ _ _ _" ));
+		Integer gameID2 = daoManager.addGame(new Game (22, new Country("Estonia"), "_ _ _ _ _ _ _" ));
+		Integer gameID3 = daoManager.addGame(new Game (23, new Country("Slovakia"), "_ _ _ _ _ _ _ _" ));
 
 		/* List down all the employees */
 		daoManager.listGames();

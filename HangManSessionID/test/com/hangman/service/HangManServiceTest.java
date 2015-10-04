@@ -1,13 +1,13 @@
 package com.hangman.service;
 
-import com.hangman.elements.State;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 import com.hangman.elements.Country;
 import com.hangman.elements.Game;
 import com.hangman.elements.GamesSummary;
-
-import org.junit.Test;
-import org.junit.Ignore;
-import static org.junit.Assert.*;
+import com.hangman.elements.State;
 
 public class HangManServiceTest {
     
@@ -17,7 +17,6 @@ public class HangManServiceTest {
     final private static char BAD_NEW_LETTER = 'r';
     final private static String ANSWER = "nepal";
     final private static String TRIED_LETTERS = "epal";
-    final private static String NEW_LINE = ";&lt;/br&gt;";
     
 	HangManService service;
 
@@ -28,63 +27,23 @@ public class HangManServiceTest {
  
     @Test
     public void testProcessRequest() {
-        //TODO:
-        // A good way to test this method would be to use for example mockit 
-        // and verify that the methods
-        //generateGame
-        //game.processNewLetter(c);
-        //updateGamesSummary();
-        //createResponse();
-        //There is no need for example to test "game.processNewLetter" 
-        //because this has already been done in GameTest.
+        //TODO: add mockito
         service.processRequest(SESSION_ID, KEY, State.RIGHT_ARM, HINT, BAD_NEW_LETTER, TRIED_LETTERS);
-        //service.processRequest(ID, KEY, State.RIGHT_ARM, HINT, BAD_NEW_LETTER, TRIED_LETTERS);
- 
+
         cleanUpSummaries();
     }
 
 	private static void cleanUpSummaries() {
 		GamesSummary.getInstance().deleteAllGames();
 	}
-	
-    @Test
-    public void testGenerateGame_NotNewGame() {
-        service.generateGame(KEY, State.RIGHT_ARM, HINT, BAD_NEW_LETTER, TRIED_LETTERS);
-        
-        Game game = service.getGame();
-        assertEquals(KEY, game.getKey());
-        assertEquals(State.RIGHT_ARM, game.getState());
-        assertEquals(HINT, game.getHint());
-    }
- 
-    @Test
-    public void testGenerateGame_NewGame() {
-        service.generateGame(null, null, null, '\0', null);
-        
-        Game game = service.getGame();
-        assertNotNull(game.getKey());
-        assertNotNull(game.getAnswer().getName());
-        assertEquals(State.START, game.getState());
-        assertNotNull(game.getHint());
-        assertEquals("", game.getTriedLetters());
-    }
-    
-    @Ignore
-    @Test
-    public void testUpdateGamesSummary() {
-        //TODO
-        // A good way to test this method would be to use for example mockit 
-        // and verify the correct method's calls
-    }
-
     
     @Test
     public void testCreateResponse() {
         
         Game game = new Game(KEY, new Country(ANSWER), State.FLOOR, HINT, TRIED_LETTERS);
 
-        service = new HangManService(game);
-        String gameResponse = service.createResponse();
+        service = new HangManService();
+        String gameResponse = service.createResponse(game);
         String expecteGameResponse = "<data>"
                 + "<id>" + 0 + "</id>"
                 + "<key>" + KEY + "</key>"
@@ -95,21 +54,6 @@ public class HangManServiceTest {
         assertEquals(expecteGameResponse, gameResponse);
     }
 
-
-    @Test
-    public void testCreateGameSummary() {
-
-        Game game = new Game(KEY, new Country(ANSWER), State.FLOOR, HINT, TRIED_LETTERS);
-
-        service = new HangManService(game);
-        String gameSummary = service.createGameSummary(game);
-        String expectedSummary = "Game ID:" + 0 + NEW_LINE
-                + "State:" + State.FLOOR + NEW_LINE
-                + "Answer:" + ANSWER + NEW_LINE
-                + "Hint:" + HINT + NEW_LINE
-                + "Tried Letters:" + TRIED_LETTERS + NEW_LINE;
-        assertEquals(expectedSummary, gameSummary);
-    }
 }
 
 

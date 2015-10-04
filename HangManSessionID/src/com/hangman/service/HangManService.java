@@ -1,78 +1,39 @@
 package com.hangman.service;
 
-import com.hangman.data.AnswersData;
 import com.hangman.data.DAOManager;
-import com.hangman.elements.Answer;
 import com.hangman.elements.Game;
-import com.hangman.elements.GamesSummary;
 import com.hangman.elements.State;
+import com.hangman.process.GameManager;
 
 /**
  * This class is responsible for processing the business logic associated to the
  * HangManServlet.
  */
 public class HangManService {
-	
-    final private static String NEW_LINE = ";&lt;/br&gt;";
     
-    GamesSummary gamesSummary = GamesSummary.getInstance();
+    GameManager gameManager = new GameManager();
 
-    Game game;
-
-	// to be moved to the Service after transforming the Game into a POJO
 	DAOManager daoManager = new DAOManager();
     
     public HangManService() {
     }
-    
-    // Used for testing only -> Package visibility
-    HangManService(Game game) {
-        this.game = game;
-    }
 
-    public String processRequest(String sessionId) {
-        return processRequest( sessionId, null, null, null, '\0', "");
-    }
-    
-    public String processRequest(String sessionId, Integer key, State state, 
-            String hint, char c, String triedLetters) {
-        generateGame(key, state, hint, c, triedLetters); // first arg to be removed
-        if (key != null && c != '\0') {
-            game.processNewLetter(c);
-        }
-        updateGamesSummary(sessionId);
+	public String processRequest(String sessionId, Integer key, State state, String hint, char c, String triedLetters) {
 
-        if(game.getState() == State.RIGHT_LEG || game.getState() == State.SUCCESS) {
-        	daoManager.addGame(game);
-        }
-        
-        String response = createResponse();
-        return response;
-    }
+		Game g = gameManager.getGame(key, state, hint, c, triedLetters);
+		if (key != null) {
+			gameManager.processNewLetter(g, c);
+		}
+		gameManager.updateGamesSummary(sessionId, g);
 
-    void generateGame(Integer key, State state, String hint, char c, String triedLetters) {
+		if (g.getState() == State.RIGHT_LEG || g.getState() == State.SUCCESS) {
+			daoManager.addGame(g); // saving game
+		}
 
-        if (key == null) {    // It is a new game
-            Integer newKey = AnswersData.getRandomAnswerId();
-            Answer answer = AnswersData.getAnswerFromId(newKey);
-            game = new Game(newKey, answer);
-        } else {
-            Answer answer = AnswersData.getAnswerFromId(key);
-            game = new Game(key, answer, state, hint, triedLetters);
-        }
-    }
+		return createResponse(g);
+	}
 
-    void updateGamesSummary(String sessionId) {
-        State newGameState = game.getState();
-        if (newGameState == State.RIGHT_LEG || newGameState == State.SUCCESS) {
-            gamesSummary.deleteGameById(sessionId);
-        } else { // add or update
-            String summary = createGameSummary(game);
-            gamesSummary.addorUpdateGameById(sessionId, summary);
-        }
-    }
-
-    String createResponse() {
+    String createResponse(Game game) {
         String newGameResponseData = "<data>"
                 + "<id>" + game.getId() + "</id>"
                 + "<key>" + game.getKey() + "</key>"
@@ -83,19 +44,4 @@ public class HangManService {
         return newGameResponseData;
     }
 
-    String createGameSummary(Game game) {
-
-        String gameSummary = "Game ID:" + game.getId() + NEW_LINE
-                + "State:" + game.getState() + NEW_LINE
-                + "Answer:" + game.getAnswer().getName() + NEW_LINE
-                + "Hint:" + game.getHint() + NEW_LINE
-                + "Tried Letters:" + game.getTriedLetters() + NEW_LINE;
-
-        return gameSummary;
-    }
-
-    // Used for testing only -> Package visibility
-    Game getGame() { //test only
-        return game;
-    }
 }

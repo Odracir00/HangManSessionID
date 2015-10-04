@@ -81,7 +81,7 @@ public class HangManServlet extends HttpServlet {
 		String resposeContent = "";
 
 		if (gameKey == null) { // it is a new game
-			resposeContent = service.processRequest(session.getId());
+			resposeContent = service.processRequest(session.getId(), null, null, null, '\0', "");
 
 			session.setAttribute("key", extractParameters("key", resposeContent));
 			session.setAttribute("state", extractParameters("state", resposeContent));
@@ -90,7 +90,7 @@ public class HangManServlet extends HttpServlet {
 		} else {
 			try {
 				Integer key = Integer.parseInt(gameKey);
-				State state = State.getStatefromString(gameState);
+				State state = State.valueOf(gameState);
 				resposeContent = service.processRequest(session.getId(), key, state, hint, newLetter, triedLetters);
 
 				String currentState = extractParameters("state", resposeContent);
