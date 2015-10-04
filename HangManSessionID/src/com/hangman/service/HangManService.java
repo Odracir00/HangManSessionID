@@ -1,6 +1,7 @@
 package com.hangman.service;
 
 import com.hangman.data.AnswersData;
+import com.hangman.data.DAOManager;
 import com.hangman.elements.Answer;
 import com.hangman.elements.Game;
 import com.hangman.elements.GamesSummary;
@@ -11,12 +12,15 @@ import com.hangman.elements.State;
  * HangManServlet.
  */
 public class HangManService {
-
+	
     final private static String NEW_LINE = ";&lt;/br&gt;";
     
-    GamesSummary gamesSummary = GamesSummary.getInstance();;
+    GamesSummary gamesSummary = GamesSummary.getInstance();
 
     Game game;
+
+	// to be moved to the Service after transforming the Game into a POJO
+	DAOManager daoManager = new DAOManager();
     
     public HangManService() {
     }
@@ -38,6 +42,10 @@ public class HangManService {
         }
         updateGamesSummary(sessionId);
 
+        if(game.getState() == State.RIGHT_LEG || game.getState() == State.SUCCESS) {
+        	daoManager.addGame(game);
+        }
+        
         String response = createResponse();
         return response;
     }
@@ -77,7 +85,7 @@ public class HangManService {
 
     String createGameSummary(Game game) {
 
-        String gameSummary = "Game:" + NEW_LINE
+        String gameSummary = "Game ID:" + game.getId() + NEW_LINE
                 + "State:" + game.getState() + NEW_LINE
                 + "Answer:" + game.getAnswer().getName() + NEW_LINE
                 + "Hint:" + game.getHint() + NEW_LINE

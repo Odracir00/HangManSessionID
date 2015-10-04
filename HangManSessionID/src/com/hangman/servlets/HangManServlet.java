@@ -1,8 +1,7 @@
 package com.hangman.servlets;
 
-import com.hangman.service.HangManService;
-import com.hangman.elements.State;
 import java.io.IOException;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -11,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.hangman.elements.State;
+import com.hangman.service.HangManService;
 
 public class HangManServlet extends HttpServlet {
 

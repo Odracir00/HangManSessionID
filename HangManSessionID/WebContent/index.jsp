@@ -9,7 +9,6 @@
     </head>
     <body onload="init()">
         <h1>Play Hang Man</h1>
-
         <table>
             <tr>
                 <th width="200">
@@ -53,9 +52,6 @@
                 </th> 
             </tr>
         </table>
-
-        <br/>
-
         <h2 id="result">Playing Hang Man ... Guess which country</h2>
         <br/>
         <h2>Hint</h2>

@@ -15,5 +15,7 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate Library"/>
+	<classpathentry kind="lib" path="C:/Users/Ricardo Santos/Desktop/eclipse-jee-mars-R-win32-x86_64/lib/mysql-connector-java-5.1.23-bin.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

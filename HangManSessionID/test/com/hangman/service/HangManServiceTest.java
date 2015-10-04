@@ -86,7 +86,7 @@ public class HangManServiceTest {
         service = new HangManService(game);
         String gameResponse = service.createResponse();
         String expecteGameResponse = "<data>"
-                + "<id>" + "" + "</id>"
+                + "<id>" + 0 + "</id>"
                 + "<key>" + KEY + "</key>"
                 + "<state>" + State.FLOOR + "</state>"
                 + "<hint>" + HINT + "</hint>"
@@ -103,7 +103,7 @@ public class HangManServiceTest {
 
         service = new HangManService(game);
         String gameSummary = service.createGameSummary(game);
-        String expectedSummary = "Game:" + NEW_LINE
+        String expectedSummary = "Game ID:" + 0 + NEW_LINE
                 + "State:" + State.FLOOR + NEW_LINE
                 + "Answer:" + ANSWER + NEW_LINE
                 + "Hint:" + HINT + NEW_LINE

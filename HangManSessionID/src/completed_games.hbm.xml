@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+	<class name="com.hangman.elements.Game" table="COMPLETED_GAMES">
+		<meta attribute="class-description">
+			This class contains the completed games details.
+		</meta>
+		<id name="id" column="ID" type="integer">
+			<generator class="native" />
+		</id>
+		<property name="key" column="KEY_VALUE" type="integer" />
+		<property name="state" column="STATE">
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">com.hangman.elements.State</param>
+				<param name="useNamed">true</param>
+			</type>
+		</property>
+		<component name="answer" class="com.hangman.elements.Country">
+			<property name="answer" type="string">
+				<column name="ANSWER" not-null="true" />
+			</property>
+		</component>
+		<property name="hint" column="HINT" type="string" />
+		<property name="triedLetters" column="TRIED_LETTERS" type="string" />
+	</class>
+</hibernate-mapping>
