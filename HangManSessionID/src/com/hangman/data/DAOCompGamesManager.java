@@ -12,15 +12,16 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import com.hangman.elements.Answer;
+import com.hangman.elements.AnswerType;
 import com.hangman.elements.Country;
 import com.hangman.elements.Game;
 
 
-public class DAOManager {
+public class DAOCompGamesManager {
 
 	private static SessionFactory sessionFactory;
 
-	public DAOManager() {
+	public DAOCompGamesManager() {
 		sessionFactory = createSessionFactory();
 	}
 
@@ -32,12 +33,12 @@ public class DAOManager {
 			System.err.println("Failed to create sessionFactory object." + ex);
 			throw new ExceptionInInitializerError(ex);
 		}
-		DAOManager daoManager = new DAOManager();
+		DAOCompGamesManager daoManager = new DAOCompGamesManager();
 
 		/* Add few game records to the database */
-		Integer gameID1 = daoManager.addGame(new Game (21, new Country("France"), "_ _ _ _ _ _" ));
-		Integer gameID2 = daoManager.addGame(new Game (22, new Country("Estonia"), "_ _ _ _ _ _ _" ));
-		Integer gameID3 = daoManager.addGame(new Game (23, new Country("Slovakia"), "_ _ _ _ _ _ _ _" ));
+		Integer gameID1 = daoManager.addGame(new Game (21, new Answer(AnswerType.COUNTRY, "France"), "_ _ _ _ _ _" ));
+		Integer gameID2 = daoManager.addGame(new Game (22, new Answer(AnswerType.COUNTRY, "Estonia"), "_ _ _ _ _ _ _" ));
+		Integer gameID3 = daoManager.addGame(new Game (23, new Answer(AnswerType.COUNTRY, "Slovakia"), "_ _ _ _ _ _ _ _" ));
 
 		/* List down all the employees */
 		daoManager.listGames();
@@ -64,7 +65,7 @@ public class DAOManager {
 	         System.out.println(game.getId());
 	         System.out.println(game.getKey());
 	         System.out.println(game.getState());
-	         System.out.println(game.getAnswer().getName());
+	         System.out.println(game.getAnswer().getValue());
 	         System.out.println(game.getHint());
 	         System.out.println(game.getTriedLetters());
 	         

@@ -2,7 +2,8 @@ package com.hangman.process;
 
 import org.junit.Test;
 
-import com.hangman.elements.Country;
+import com.hangman.elements.Answer;
+import com.hangman.elements.AnswerType;
 import com.hangman.elements.Game;
 import com.hangman.elements.State;
 
@@ -43,7 +44,7 @@ public class GameManagerTest {
 		Game game = gameManager.getGame(null, null, null, '\0', null);
 
 		assertNotNull(game.getKey());
-		assertNotNull(game.getAnswer().getName());
+		assertNotNull(game.getAnswer().getValue());
 		assertEquals(State.START, game.getState());
 		assertNotNull(game.getHint());
 		assertEquals("", game.getTriedLetters());
@@ -51,7 +52,7 @@ public class GameManagerTest {
 
 	@Test
 	public void testProcessNewLetter_HitAndSuccess() {
-		Game game = new Game(KEY, new Country(ANSWER), State.ROPE, " n e _ a l ", TRIED_LETTERS);
+		Game game = new Game(KEY, new Answer(AnswerType.COUNTRY, ANSWER), State.ROPE, " n e _ a l ", TRIED_LETTERS);
 		gameManager.processNewLetter(game, GOOD_NEW_LETTER);
 
 		assertEquals(KEY, game.getKey());
@@ -61,7 +62,7 @@ public class GameManagerTest {
 
     @Test
     public void testProcessNewLetter_HitAndNotSuccess() {
-        Game game = new Game(KEY, new Country(ANSWER), State.ROPE, " _ e _ a l ", TRIED_LETTERS);
+        Game game = new Game(KEY, new Answer(AnswerType.COUNTRY, ANSWER), State.ROPE, " _ e _ a l ", TRIED_LETTERS);
         gameManager.processNewLetter(game, GOOD_NEW_LETTER);
 
         assertEquals(KEY, game.getKey());
@@ -71,7 +72,7 @@ public class GameManagerTest {
 
     @Test
     public void testProcessNewLetter_MissAndGameOver() {
-        Game game = new Game(KEY, new Country(ANSWER), State.LEFT_LEG, " _ e _ a l ", TRIED_LETTERS);
+        Game game = new Game(KEY, new Answer(AnswerType.COUNTRY, ANSWER), State.LEFT_LEG, " _ e _ a l ", TRIED_LETTERS);
         gameManager.processNewLetter(game, BAD_NEW_LETTER);
 
         assertEquals(KEY, game.getKey());
@@ -81,7 +82,7 @@ public class GameManagerTest {
 
     @Test
     public void testProcessNewLetter_MissAndNotGameOver() {
-        Game game = new Game(KEY, new Country(ANSWER), State.RIGHT_ARM, " _ e _ a l ", TRIED_LETTERS);
+        Game game = new Game(KEY, new Answer(AnswerType.COUNTRY, ANSWER), State.RIGHT_ARM, " _ e _ a l ", TRIED_LETTERS);
         gameManager.processNewLetter(game, BAD_NEW_LETTER);
 
         assertEquals(KEY, game.getKey());
@@ -91,14 +92,14 @@ public class GameManagerTest {
 
 	@Test
 	public void testUpdateStateFromStartToFloor() {
-		Game game = new Game(KEY, new Country(ANSWER), State.START, HINT, TRIED_LETTERS);
+		Game game = new Game(KEY, new Answer(AnswerType.COUNTRY, ANSWER), State.START, HINT, TRIED_LETTERS);
 		gameManager.updateState(game);
 		assertEquals(State.FLOOR, game.getState());
 	}
 
 	@Test
 	public void testUpdateStateFromFloorToVerticalbar() {
-		Game game = new Game(KEY, new Country(ANSWER), State.FLOOR, HINT, TRIED_LETTERS);
+		Game game = new Game(KEY, new Answer(AnswerType.COUNTRY, ANSWER), State.FLOOR, HINT, TRIED_LETTERS);
 		gameManager.updateState(game);
 		assertEquals(State.VERTICAL_BAR, game.getState());
 	}
@@ -111,7 +112,7 @@ public class GameManagerTest {
 
 	@Test
 	public void testCreateGameSummary() {
-		Game game = new Game(KEY, new Country(ANSWER), State.FLOOR, HINT, TRIED_LETTERS);
+		Game game = new Game(KEY, new Answer(AnswerType.COUNTRY, ANSWER), State.FLOOR, HINT, TRIED_LETTERS);
 		String gameSummary = gameManager.createGameSummary(game);
 		String expectedSummary = "Game ID:" + 0 + NEW_LINE + "State:" + State.FLOOR + NEW_LINE + "Answer:" + ANSWER
 				+ NEW_LINE + "Hint:" + HINT + NEW_LINE + "Tried Letters:" + TRIED_LETTERS + NEW_LINE;

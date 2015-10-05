@@ -18,7 +18,7 @@ public class GameManager {
         if (key == null) {    // It is a new game
             Integer newKey = AnswersData.getRandomAnswerId();
             Answer answer = AnswersData.getAnswerFromId(newKey);
-            game = new Game(newKey, answer, createEmptyHint(answer.getName()));
+            game = new Game(newKey, answer, createEmptyHint(answer.getValue()));
         } else {
             Answer answer = AnswersData.getAnswerFromId(key); 
             // acho qure mais tarde isto pode passar tb para o sessiID
@@ -44,7 +44,7 @@ public class GameManager {
 
 		boolean hit = false;
 		boolean success = false;
-		char[] answerArray = g.getAnswer().getName().toCharArray();
+		char[] answerArray = g.getAnswer().getValue().toCharArray();
 		char[] hintArray = g.getHint().replaceAll(" ", "").toCharArray();
 
 		for (int i = 0; i < answerArray.length; i++) {
@@ -120,7 +120,7 @@ public class GameManager {
     String createGameSummary(Game game) {
         String gameSummary = "Game ID:" + game.getId() + NEW_LINE
                 + "State:" + game.getState() + NEW_LINE
-                + "Answer:" + game.getAnswer().getName() + NEW_LINE
+                + "Answer:" + game.getAnswer().getValue() + NEW_LINE
                 + "Hint:" + game.getHint() + NEW_LINE
                 + "Tried Letters:" + game.getTriedLetters() + NEW_LINE;
         return gameSummary;

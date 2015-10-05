@@ -1,6 +1,6 @@
 package com.hangman.service;
 
-import com.hangman.data.DAOManager;
+import com.hangman.data.DAOCompGamesManager;
 import com.hangman.elements.Game;
 import com.hangman.elements.State;
 import com.hangman.process.GameManager;
@@ -13,7 +13,7 @@ public class HangManService {
     
     GameManager gameManager = new GameManager();
 
-	DAOManager daoManager = new DAOManager();
+	DAOCompGamesManager daoCompGamesManager = new DAOCompGamesManager();
     
     public HangManService() {
     }
@@ -27,7 +27,7 @@ public class HangManService {
 		gameManager.updateGamesSummary(sessionId, g);
 
 		if (g.getState() == State.RIGHT_LEG || g.getState() == State.SUCCESS) {
-			daoManager.addGame(g); // saving game
+			daoCompGamesManager.addGame(g); // saving game
 		}
 
 		return createResponse(g);

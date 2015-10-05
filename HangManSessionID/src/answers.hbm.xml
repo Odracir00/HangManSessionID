@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+	<class name="com.hangman.elements.Answer" table="ANSWERS">
+		<id name="id" column="ID" type="integer">
+			<generator class="native" />
+		</id>
+		<property name="type" column="TYPE">
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">com.hangman.elements.AnswerType</param>
+				<param name="useNamed">true</param>
+			</type>
+		</property>
+		<property name="value" column="VALUE" type="string" />
+	</class>
+</hibernate-mapping>

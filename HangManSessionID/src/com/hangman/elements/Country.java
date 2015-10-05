@@ -1,31 +1,36 @@
 package com.hangman.elements;
 
-public class Country implements Answer {
+/**
+ * @deprecated
+ * @author Ricardo Santos
+ *
+ */
+public class Country   {
 
     String answer;
 
-    public Country(String answer) {
+    private Country(String answer) {
         this.answer = answer;
     }
 
-    public Country() {
+    private Country() {
     }
-    
-    @Override
-    public String getName() {
-        return answer;
-    }
-    
-    public void setName(String answer) {
-        this.answer = answer;
-    }
-
- 
-    public String getAnswer() {
-        return answer;
-    }
-    
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
+//    
+//    @Override
+//    public String getName() {
+//        return answer;
+//    }
+//    
+//    public void setName(String answer) {
+//        this.answer = answer;
+//    }
+//
+// 
+//    public String getAnswer() {
+//        return answer;
+//    }
+//    
+//    public void setAnswer(String answer) {
+//        this.answer = answer;
+//    }
 }

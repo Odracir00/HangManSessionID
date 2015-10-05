@@ -9,18 +9,20 @@
 		<id name="id" column="ID" type="integer">
 			<generator class="native" />
 		</id>
-		<property name="key" column="KEY_VALUE" type="integer" />
+		<property name="key" column="ANSWER_ID" type="integer" />
 		<property name="state" column="STATE">
 			<type name="org.hibernate.type.EnumType">
 				<param name="enumClass">com.hangman.elements.State</param>
 				<param name="useNamed">true</param>
 			</type>
 		</property>
-		<component name="answer" class="com.hangman.elements.Country">
-			<property name="answer" type="string">
-				<column name="ANSWER" not-null="true" />
-			</property>
-		</component>
+<!-- 		<component name="answer" class="com.hangman.elements.Answer"> -->
+<!-- 			<property name="value" type="string"> -->
+<!-- 				<column name="ANSWER" not-null="true" /> -->
+<!-- 			</property> -->
+<!-- 		</component> -->
+        <one-to-one name="answer" class="com.hangman.elements.Answer"
+            cascade="save-update"></one-to-one>
 		<property name="hint" column="HINT" type="string" />
 		<property name="triedLetters" column="TRIED_LETTERS" type="string" />
 	</class>

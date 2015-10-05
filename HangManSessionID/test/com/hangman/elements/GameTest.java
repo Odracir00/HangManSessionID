@@ -12,9 +12,9 @@ public class GameTest {
 
 	@Test
 	public void testNewGame() {
-		Game game = new Game(KEY, new Country(ANSWER), HINT);
+		Game game = new Game(KEY, new Answer(AnswerType.COUNTRY, ANSWER), HINT);
 		assertNotNull(game.getKey());
-		assertEquals(ANSWER, game.getAnswer().getName());
+		assertEquals(ANSWER, game.getAnswer().getValue());
 		assertEquals(State.START, game.getState());
 		assertEquals(HINT, game.getHint());
 		assertEquals("", game.getTriedLetters());
@@ -22,10 +22,10 @@ public class GameTest {
 
 	@Test
 	public void testOnGoingGame() {
-		Game game = new Game(KEY, new Country(ANSWER), State.ROPE, HINT, TRIED_LETTERS);
+		Game game = new Game(KEY,  new Answer(AnswerType.COUNTRY, ANSWER), State.ROPE, HINT, TRIED_LETTERS);
 		assertEquals(KEY, game.getKey());
 		assertEquals(State.ROPE, game.getState());
-		assertEquals(ANSWER, game.getAnswer().getName());
+		assertEquals(ANSWER, game.getAnswer().getValue());
 		assertEquals(HINT, game.getHint());
 		assertEquals(TRIED_LETTERS, game.getTriedLetters());
 	}

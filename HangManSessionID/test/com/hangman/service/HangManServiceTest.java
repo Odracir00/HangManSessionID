@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.hangman.elements.Answer;
+import com.hangman.elements.AnswerType;
 import com.hangman.elements.Country;
 import com.hangman.elements.Game;
 import com.hangman.elements.GamesSummary;
@@ -40,7 +42,7 @@ public class HangManServiceTest {
     @Test
     public void testCreateResponse() {
         
-        Game game = new Game(KEY, new Country(ANSWER), State.FLOOR, HINT, TRIED_LETTERS);
+        Game game = new Game(KEY, new Answer(AnswerType.COUNTRY, ANSWER), State.FLOOR, HINT, TRIED_LETTERS);
 
         service = new HangManService();
         String gameResponse = service.createResponse(game);
