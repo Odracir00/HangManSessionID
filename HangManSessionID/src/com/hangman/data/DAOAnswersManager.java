@@ -44,10 +44,10 @@ public class DAOAnswersManager {
 		/* List down all the employees */
 		List<Answer> list = daoManager.listAnswers();
 		System.out.println(list.size());
-//		for(Answer ans : list ){
-//			System.out.println(ans.getValue());
-//			
-//		}
+		for(Answer ans : list ){
+			System.out.println(ans.getValue());
+			
+		}
 
 //		/* Update employee's records */
 //	//	daoManager.updateEmployee(gameID1, "abc");
@@ -95,7 +95,7 @@ public class DAOAnswersManager {
 	      List<Answer> answers = new LinkedList<>();
 	      try{
 	         tx = session.beginTransaction();
-	         answers = session.createQuery("FROM com.hangman.elements.Answer").list(); 
+	         answers = session.createQuery("FROM Answer ans WHERE ans.type = 'COUNTRY'").list(); // country hardcoded by now
 	         tx.commit();
 	      }catch (HibernateException e) {
 	         if (tx!=null) tx.rollback();
